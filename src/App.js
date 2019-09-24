@@ -6,24 +6,45 @@ import TodoItem from './components/TodoItem';
 
  class App extends Component {
   state={
-    items:[{id:1,title:'Wakeup'},{id:2,title:'Breakfast'}],
+    items:[],
     id:uuid(),
     item:'',
     editItem:false
   };
 
-  handleChange=(e)=>{ console.log('Handle Change') }
-  handleSubmit=(e)=>{ console.log('Handle Submit') }
-  clearList = ()=>{ console.log('Clear List') }
-  handleDelete = (id)=>{ console.log(`handle Delete ${id}`) }
-  handleEdit = (id)=>{console.log(`Handle Edit ${id}`)}
+  handleChange=e=>{
+     this.setState({
+       item:e.target.value
+     });
+  };
+  handleSubmit=(e)=>{
+    e.preventDefault();
+    const newItem = {
+       id:this.state.id,
+       title:this.state.item
+    }
+    const updatedItems = [...this.state.items,newItem];
+
+    this.setState({
+      items:updatedItems,
+      item:"",
+      id:uuid(),
+      editItem:false
+    },
+    console.log(this.state)
+)
+   };
+
+  clearList = ()=>{ console.log('Clear List') };
+  handleDelete = (id)=>{ console.log(`handle Delete ${id}`) };
+  handleEdit = (id)=>{console.log(`Handle Edit ${id}`)};
 
 
 render(){
   return (
      <div className='container'>
       <div className='row'>
-       <div className='col-10 mx-auto col-md-8 bg-warning m-23'>
+       <div className='col-10 mx-auto col-md-8 mt-25'>
         <h3 className='text-capitalize text-center'>todo input</h3>
           <TodoInput item={this.state.item}
             handleChange={this.handleChange}
