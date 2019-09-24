@@ -30,14 +30,32 @@ import TodoItem from './components/TodoItem';
       item:"",
       id:uuid(),
       editItem:false
-    },
-    console.log(this.state)
-)
+    })};
+
+  clearList = ()=>{
+    this.setState({
+      items:[]
+    });
    };
 
-  clearList = ()=>{ console.log('Clear List') };
-  handleDelete = (id)=>{ console.log(`handle Delete ${id}`) };
-  handleEdit = (id)=>{console.log(`Handle Edit ${id}`)};
+  handleDelete = (id)=>{
+     const filterItems = this.state.items.filter(item=>item.id !== id);
+     this.setState({
+       items:filterItems
+     });
+   };
+
+  handleEdit = (id)=>{
+    const filterItems = this.state.items.filter(item=>item.id !== id);
+    const selectedItem = this.state.items.find(item=>item.id === id);
+    console.log(selectedItem);
+    this.setState({
+      items:filterItems,
+      item:selectedItem.title,
+      id:id,
+      editItem:true
+    });
+  };
 
 
 render(){
